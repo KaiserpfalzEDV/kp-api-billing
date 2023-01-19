@@ -1,0 +1,35 @@
+---
+api-server: &api
+  url: ${LIBRARY_API_URL}
+  scope: javax.inject.Singleton
+
+dev-api-server: &dev-api
+  url: https://localhost:8445/
+  scope: javax.inject.Singleton
+
+test-api-server: &test-api
+  url: https://localhost:8445/
+  scope: javax.inject.Singleton
+
+quarkus:
+  rest-client:
+    "de.kaiserpfalzedv.billing.api.client.AssetClient": *api
+    "de.kaiserpfalzedv.billing.api.client.BorrowClient": *api
+    "de.kaiserpfalzedv.billing.api.client.LocationClient": *api
+    "de.kaiserpfalzedv.billing.api.client.UserClient": *api
+
+"%dev":
+  quarkus:
+    rest-client:
+      "de.kaiserpfalzedv.billing.api.client.AssetClient": *dev-api
+      "de.kaiserpfalzedv.billing.api.client.BorrowClient": *dev-api
+      "de.kaiserpfalzedv.billing.api.client.LocationClient": *dev-api
+      "de.kaiserpfalzedv.billing.api.client.UserClient": *test-api
+
+"%test":
+  quarkus:
+    rest-client:
+      "de.kaiserpfalzedv.billing.api.client.AssetClient": *test-api
+      "de.kaiserpfalzedv.billing.api.client.BorrowClient": *test-api
+      "de.kaiserpfalzedv.billing.api.client.LocationClient": *test-api
+      "de.kaiserpfalzedv.billing.api.client.UserClient": *test-api
